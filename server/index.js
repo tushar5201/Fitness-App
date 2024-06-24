@@ -32,7 +32,7 @@ mongoose.connect(process.env.MONGO_URL)
     });
 
 app.get("/", (req, res) => {
-    res.send("Hello")
+    res.send("Hello");
 })
 
 app.use("/user", userRoutes);
