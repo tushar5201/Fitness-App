@@ -21,8 +21,6 @@ app.use(cors(
     {
         origin: "https://fitpro-zeta.vercel.app",
         methods: ["POST", "GET", "DELETE", "PUT"],
-        credentials: true,
-        withCredentials: true,
     }
 ))
 
