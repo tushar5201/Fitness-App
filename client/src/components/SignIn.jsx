@@ -4,6 +4,7 @@ import TextInput from "./TextInput";
 import { Button, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { origin } from "../origin";
 
 const Container = styled.div`
   width: 100%;
@@ -72,7 +73,7 @@ const SignIn = () => {
   const handleSignIn = async (e) => {
     try {
       e.preventDefault();
-      const res = await axios.post('http://localhost:5000/user/signin', { email, password }, { withCredentials: true })
+      const res = await axios.post(`${origin}/user/signin`, { email, password }, { withCredentials: true })
       window.location.reload();
       toast.success("Signin Successful.");
       localStorage.setItem('userInfo', JSON.stringify(res));

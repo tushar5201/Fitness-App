@@ -4,6 +4,7 @@ import TextInput from '../components/TextInput';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { origin } from '../origin';
 
 // const FormContainer = styled.div`
 //   display: flex;
@@ -88,7 +89,7 @@ const Contact = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const res = await axios.post('http://localhost:5000/contact', { subject, email, message });
+        const res = await axios.post(`${origin}/contact`, { subject, email, message });
         if (res.status === 200) {
             toast.success("Mail sent Successfully.")
         } else {

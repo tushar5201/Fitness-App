@@ -9,6 +9,7 @@ import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
 import { getError } from "../utils/utils";
 import AddWorkout from "../components/AddWorkout";
+import { origin } from "../origin";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -108,7 +109,7 @@ const Workouts = () => {
     const getTodaysWorkout = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const res = await axios.get(`http://localhost:5000/api/getWorkout/${date}/${user}`);
+        const res = await axios.get(`${origin}/api/getWorkout/${date}/${user}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: res.data });
       } catch (error) {
         dispatch({ type: 'FETCH_FAILED', payload: getError(error) });

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TextInput from "./TextInput";
 import { toast } from 'react-toastify';
 import { Form, Button } from 'react-bootstrap'
+import { origin } from "../origin";
 
 // import { UserSignUp } from "../api";
 // import { useDispatch } from "react-redux";
@@ -54,7 +55,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       // const res = await axios.post("http://localhost:5000/user/signup", { name, email, password })
-      const res = await fetch("http://localhost:5000/user/signup", {
+      const res = await fetch(`${origin}/user/signup`, {
         method: "post",
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ name, email, password })

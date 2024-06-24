@@ -4,6 +4,7 @@ import TextInput from "./TextInput";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { origin } from "../origin";
 
 const Card = styled.div`
   flex: 1;
@@ -41,7 +42,7 @@ const AddWorkout = ({date}) => {
   const addWorkoutHandler = async (e) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("userInfo")).data.id;
-    const res = await axios.post("http://localhost:5000/api/addWorkout", { user, category, workoutName, sets, reps, weight, duration, date });
+    const res = await axios.post(`${origin}/api/addWorkout`, { user, category, workoutName, sets, reps, weight, duration, date });
     if (res.status === 200) {
       toast.success("Added");
     } else {
