@@ -19,7 +19,7 @@ dotenv.config();
 
 app.use(cors(
     {
-        origin: "http://localhost:3000",
+        origin: "https://fitpro-zeta.vercel.app",
         methods: ["POST", "GET", "DELETE", "PUT"],
         credentials: true,
         withCredentials: true,
