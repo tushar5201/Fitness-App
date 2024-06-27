@@ -50,7 +50,7 @@ const MobileIcon = styled.div`
   display: none;
   color: ${({ theme }) => theme.text_primary};
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 450px) {
     display: flex;
     align-items: center;
   }
@@ -108,13 +108,12 @@ const MobileMenu = styled.ul`
   flex-direction: column;
   align-items: start;
   gap: 16px;
-  padding: 12px 40px 24px 40px;
+  // padding: 12px 40px 24px 40px;
   list-style: none;
   width: 90%;
   background: ${({ theme }) => theme.bg};
   position: absolute;
   top: 80px;
-  right: 0;
   border-radius: 0 0 20px 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   transition: all 0.6s ease-in-out;
@@ -151,14 +150,19 @@ const Navbar = ({ currentUser }) => {
         <NavLogo to="/">
           <Logo src={LogoImg} alt="Logo" />
         </NavLogo>
-        <MobileIcon onClick={() => setIsOpen(!isOpen)}>
-          <MenuRounded sx={{ color: "inherit" }} />
-        </MobileIcon>
         <MobileMenu isOpen={isOpen}>
           <NavLinkStyled to="/" onClick={() => setIsOpen(false)}>Dashboard</NavLinkStyled>
           <NavLinkStyled to="/workouts" onClick={() => setIsOpen(false)}>Workouts</NavLinkStyled>
-          <NavLinkStyled to="/tutorials" onClick={() => setIsOpen(false)}>Tutorials</NavLinkStyled>
+          {/* <NavLinkStyled to="/tutorials" onClick={() => setIsOpen(false)}>Tutorials</NavLinkStyled> */}
           <NavLinkStyled to="/contact" onClick={() => setIsOpen(false)}>Contact</NavLinkStyled>
+          <TextInput
+            label="Query"
+            type="text"
+            placeholder="Enter your Meal (100g)"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <Button className="btn btn-primary mt-4" onClick={getData}>Add</Button>
         </MobileMenu>
         <NavItems>
           <NavLinkStyled to="/">Dashboard</NavLinkStyled>
@@ -175,9 +179,11 @@ const Navbar = ({ currentUser }) => {
           <Button className="btn btn-primary mt-4" onClick={getData}>Add</Button>
         </NavItems>
         <UserContainer>
-          {/* <Avatar src={currentUser?.img}>{currentUser?.name[0]}</Avatar> */}
           <TextButton>{currentUser?.data.name}</TextButton>
           <TextButton onClick={logout}>Logout</TextButton>
+          <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+            <MenuRounded sx={{ color: "inherit" }} />
+          </MobileIcon>
         </UserContainer>
       </NavContainer>
     </Nav>

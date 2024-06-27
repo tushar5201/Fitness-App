@@ -12,6 +12,7 @@ import { FoodCalories } from "./Context/foodContext";
 import { useState } from "react";
 import Contact from "./pages/Contact";
 import Tutorial from "./pages/Tutorial";
+import ExerciseDetails from "./pages/ExerciseDetails";
 
 
 const Container = styled.div`
@@ -21,7 +22,7 @@ const Container = styled.div`
   flex-direction: column;
   background: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.text_primary};
-  overflow: hidden; /* Updated to a single overflow property */
+  // overflow: hidden; /* Updated to a single overflow property */
   transition: all 0.2s ease;
 `;
 
@@ -42,8 +43,9 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/workouts" element={<Workouts />} />
-                  {/* <Route path="/tutorials" element={<Tutorial />} /> */}
+                  <Route path="/tutorials" element={<Tutorial />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/exercise/:id" element={<ExerciseDetails />} />
                 </Routes>
               </>
             ) : (

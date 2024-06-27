@@ -1,1 +1,1 @@
-export const origin = "https://fitpro-backend.vercel.app"
+export const origin = "http://localhost:5000"

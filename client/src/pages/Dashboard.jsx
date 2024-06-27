@@ -111,7 +111,6 @@ const Dashboard = () => {
     <Container>
       <Wrapper>
         <Title>Dashboard</Title>
-
         <FlexWrap>
           <CaloriesCard />
         </FlexWrap>

@@ -1,51 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box } from '@mui/material';
+import {  Button, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { exerciseOptions, fetchData } from "../utils/fetchData";
 
-import { exerciseOptions, fetchData, youtubeOptions } from '../utils/fetchData';
-import Detail from '../components/Detail';
-import ExerciseVideos from '../components/ExerciseVideos';
-import SimilarExercises from '../components/SimilarExercises';
+const ExerciseDetails = () => {
+    const [exerciseDetail, setExerciseDetail] = useState({});
+    const { id } = useParams();
 
-const ExerciseDetail = () => {
-  const [exerciseDetail, setExerciseDetail] = useState({});
-  const [exerciseVideos, setExerciseVideos] = useState([]);
-  const [targetMuscleExercises, setTargetMuscleExercises] = useState([]);
-  const [equipmentExercises, setEquipmentExercises] = useState([]);
-  const { id } = useParams();
+    useEffect(() => {
+        const fetchExerciseData = async () => {
+            const exerciseDbUrl = "https://exercisedb.p.rapidapi.com";
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+            const ExerciseDetailData = await fetchData(`${exerciseDbUrl}/exercises/exercise/${id}`, exerciseOptions);
+            setExerciseDetail(ExerciseDetailData);
+        }
 
-    const fetchExercisesData = async () => {
-      const exerciseDbUrl = 'https://exercisedb.p.rapidapi.com';
-      const youtubeSearchUrl = 'https://youtube-search-and-download.p.rapidapi.com';
+        fetchExerciseData();
+    }, [id]);
 
-      const exerciseDetailData = await fetchData(`${exerciseDbUrl}/exercises/exercise/${id}`, exerciseOptions);
-      setExerciseDetail(exerciseDetailData);
+    const { bodyPart, gifUrl, name, target, equipment } = exerciseDetail;
 
-      const exerciseVideosData = await fetchData(`${youtubeSearchUrl}/search?query=${exerciseDetailData.name} exercise`, youtubeOptions);
-      setExerciseVideos(exerciseVideosData.contents);
+    const extraDetails = [
+        {
+            icon: "/images/bodypart.jpeg",
+            name: bodyPart
+        },
+        {
+            icon: "/images/target.jpeg",
+            name: target
+        },
+        {
+            icon: "/images/equipment.jpeg",
+            name: equipment
+        }
+    ]
+    return (
+        <Stack gap={"60px"} sx={{ flexDirection: { lg: "row" }, p: "20px", alignItems: "center" }}>
+            <img src={gifUrl} alt={name} loading="lazy" className="detail-image" />
+            <Stack sx={{gap: {lg: "35px", xs: "20px"}}}>
+                <Typography variant="h3">{name}</Typography>
+                <Typography variant="h6">
+                    Exercises kapp you strong. {name} {` `}
+                    is one of the best exercises to target your {target} it will help you to improve your mood & gain energy.
+                </Typography>
 
-      const targetMuscleExercisesData = await fetchData(`${exerciseDbUrl}/exercises/target/${exerciseDetailData.target}`, exerciseOptions);
-      setTargetMuscleExercises(targetMuscleExercisesData);
+                {extraDetails.map((item) => (
+                    <Stack key={item.name} direction={"row"} gap="24px" alignItems={"center"}>
+                        <Button sx={{background: "#fff2db", borderRadius: "50%", width: "100px", height: "100px"}}>
+                            <img src={item.icon} alt={item.name} style={{width: "50px", height: "50px"}} />
+                        </Button>
+                        <Typography textTransform={"capitalize"} variant="h5">{item.name}</Typography>
+                    </Stack>
+                ))}
+            </Stack>
+        </Stack>
 
-      const equimentExercisesData = await fetchData(`${exerciseDbUrl}/exercises/equipment/${exerciseDetailData.equipment}`, exerciseOptions);
-      setEquipmentExercises(equimentExercisesData);
-    };
+    )
+}
 
-    fetchExercisesData();
-  }, [id]);
-
-  if (!exerciseDetail) return <div>No Data</div>;
-
-  return (
-    <Box sx={{ mt: { lg: '96px', xs: '60px' } }}>
-      <Detail exerciseDetail={exerciseDetail} />
-      <ExerciseVideos exerciseVideos={exerciseVideos} name={exerciseDetail.name} />
-      <SimilarExercises targetMuscleExercises={targetMuscleExercises} equipmentExercises={equipmentExercises} />
-    </Box>
-  );
-};
-
-export default ExerciseDetail;
+export default ExerciseDetails;
